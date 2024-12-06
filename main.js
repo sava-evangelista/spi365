@@ -79,6 +79,8 @@ function loadScenario(index) {
     document.getElementById("scenario-text").textContent = scenario.text;
     document.getElementById("option1").textContent = scenario.option1.text;
     document.getElementById("option2").textContent = scenario.option2.text;
+
+    // Ensure click handlers are updated correctly for each scenario
     document.getElementById("option1").onclick = () => handleChoice(scenario.option1);
     document.getElementById("option2").onclick = () => handleChoice(scenario.option2);
 }
@@ -86,7 +88,10 @@ function loadScenario(index) {
 function handleChoice(choice) {
     happiness += choice.happiness || 0;
     summary.push(choice.text + ` (${choice.happiness || 0}% happiness)`);
+
+    // Trigger random event with a 50% probability
     if (Math.random() < 0.5) randomEvent();
+
     currentScenario++;
     updateStats();
     loadScenario(currentScenario);
@@ -102,5 +107,6 @@ function endGame() {
     document.getElementById("options-container").remove();
 }
 
+// Initialize the game
 updateStats();
 loadScenario(0);
