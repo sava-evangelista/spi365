@@ -195,9 +195,6 @@ const scenarios = [
                 Reflect on what went well and what could have been done differently. Would you make the same
                 choices if you played again?
             </p>
-            <div style="text-align: center; margin-top: 20px;">
-                <button id="play-again-button" style="padding: 10px 20px; font-size: 16px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Play Again</button>
-            </div>
         `;
     
         document.getElementById("play-again-button").onclick = resetGame;
