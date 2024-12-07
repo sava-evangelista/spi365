@@ -1,6 +1,6 @@
 const scenarios = [
     {
-    text: "You are in charge of a society with a food shortage. Make difficult decisions to balance happiness and stability.",
+    text: "Welcome to Survival Choices, a decision-making game where you take on the role of leader in a society teetering on the brink of collapse. A devastating food shortage has gripped your community, forcing you to make critical decisions that will shape the future of your people. Every choice matters: Who gets priority when supplies are scarce—the young, the sick, or the strong? Every choice you make not only impacts survival but also the morale and unity of your people. Can you navigate these challenges while keeping the community happy?",
     startSlide: true // Special flag for the first slide
     },
     {
