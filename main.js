@@ -177,21 +177,33 @@ const scenarios = [
     document.getElementById("option1").onclick = () => handleChoice(scenario.option1);
     document.getElementById("option2").onclick = () => handleChoice(scenario.option2);
     }
+
+    function triggerSicknessEvent() {
+        if (Math.random() < 0.5) { // 50% chance
+            happiness -= 15; // Decrease happiness by 15
+            summary.push({ text: "Random Event: Sickness (-15% happiness)", color: "orange" });
+        }
+    }
     
     function handleChoice(choice) {
-    happiness += choice.happiness || 0;
-    summary.push({
-    text: `${choice.text} (${choice.happiness > 0 ? "+" : ""}${choice.happiness}% happiness)`,
-    color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
-    });
+        happiness += choice.happiness || 0;
+        summary.push({
+            text: `${choice.text} (${choice.happiness > 0 ? "+" : ""}${choice.happiness}% happiness)`,
+            color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
+        });
     
-    decisionsMade++;
-    adjustEventChances(choice);
+        decisionsMade++;
+        adjustEventChances(choice);
     
-    randomEvent(() => {
-    currentScenario++;
-    loadScenario(currentScenario);
-    });
+        // Special case: Expired food decision
+        if (choice.text === "Keep distributing expired food") {
+            triggerSicknessEvent(); // Trigger the sickness event
+        }
+    
+        randomEvent(() => {
+            currentScenario++;
+            loadScenario(currentScenario);
+        });
     }
     
     function loadSummary() {
