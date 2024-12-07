@@ -58,11 +58,11 @@ let summary = [];
 let decisionsMade = 0; // Counter for decisions made
 
 const robotDecisions = [
-    { text: "No surveillance", happiness: -10, robbing: 10 },
-    { text: "No police", happiness: 10, robbing: 5 },
-    { text: "Bread", happiness: 5, racoon: 10 },
-    { text: "3 strong men", happiness: 10 },
-    { text: "2 moderately hungry people", happiness: 10 },
+    { text: "Do not install cameras", happiness: 10, robbing: 10 },
+    { text: "Do not employ extra police", happiness: 10, robbing: 5 },
+    { text: "Choose bread", happiness: 5, racoon: 10 },
+    { text: "Feed 3 strong men", happiness: 10 },
+    { text: "Feed 2 moderately hungry people", happiness: 10 },
     { text: "Keep distributing expired food", happiness: 20, sickness: 50 },
     { text: "Host ceremonies", happiness: 5, robbing: 5 }
 ];
