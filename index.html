@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Start Screen</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision-Making Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <div id="start-screen" class="screen">
-      <h1>Welcome to the Game</h1>
-      <button id="start-button">Start</button>
+    <div id="game-container">
+        <h1>Food Shortage Decision-Making Game</h1>
+        <div id="stats">
+            <p>Public Happiness: <span id="happiness">70</span>%</p>
+        </div>
+        <div id="scenario-container">
+            <p id="scenario-text">You are in charge of a society with a food shortage. Make difficult decisions to balance happiness and stability.</p>
+        </div>
+        <div id="options-container">
+            <button id="option1">Option 1</button>
+            <button id="option2">Option 2</button>
+        </div>
     </div>
-    <div id="blank-screen" class="screen hidden">
-      <!-- Blank screen content -->
-    </div>
-  </div>
-  <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
