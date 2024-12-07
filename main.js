@@ -77,30 +77,28 @@ function adjustEventChances(effect) {
 }
 
 function randomEvent(callback) {
-    const roll = Math.random() * 100; // Generate a random number between 0 and 100
-    let cumulativeChance = 0;
+    const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
 
-    for (const event of randomEvents) {
-        cumulativeChance += event.chance;
-        if (roll <= cumulativeChance) {
-            happiness += event.effect.happiness;
-            summary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
+    if (triggeredEvents.length > 0) {
+        const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)]; // Pick one random event
+        happiness += event.effect.happiness;
+        summary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
 
-            // Show random event screen
-            const scenarioContainer = document.getElementById("scenario-container");
-            const optionsContainer = document.getElementById("options-container");
+        // Show random event screen
+        const scenarioContainer = document.getElementById("scenario-container");
+        const optionsContainer = document.getElementById("options-container");
 
-            scenarioContainer.innerHTML = `<p>Random Event: ${event.name} occurred!</p>`;
-            optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
+        scenarioContainer.innerHTML = `<p>Random Event: ${event.name} occurred!</p>`;
+        optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
 
-            document.getElementById("continue-button").onclick = () => {
-                callback();
-            };
-            return;
-        }
+        document.getElementById("continue-button").onclick = () => {
+            callback();
+        };
+    } else {
+        callback(); // No random event, proceed normally
     }
-    callback(); // No random event, proceed normally
 }
+
 
 function loadScenario(index) {
     if (index >= scenarios.length) {
