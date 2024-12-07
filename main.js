@@ -49,7 +49,8 @@ let randomEvents = [
     { name: "Robbing", chance: 15, effect: { happiness: -10 } },
     { name: "Corruption", chance: 15, effect: { happiness: -10 } },
     { name: "Camera breaks", chance: 15, effect: { happiness: -10 } },
-    { name: "Raccoon steals food", chance: 15, effect: { happiness: -10 } }
+    { name: "Raccoon steals food", chance: 15, effect: { happiness: -10 } },
+    { name: "Sickness", chance: 0, effect: { happiness: -15 } } // Sickness event is conditionally triggered
 ];
 
 let currentScenario = 0;
@@ -102,7 +103,7 @@ function randomEvent(callback) {
     if (triggeredEvents.length > 0) {
         const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
         happiness += event.effect.happiness;
-        summary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
+        summary.push({ text: `Random Event: ${event.name} (${event.effect.happiness}% happiness)`, color: "orange" });
 
         const scenarioContainer = document.getElementById("scenario-container");
         const optionsContainer = document.getElementById("options-container");
@@ -118,34 +119,33 @@ function randomEvent(callback) {
     }
 }
 
-function simulateRobotEvents() {
-    const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
-
-    if (triggeredEvents.length > 0) {
-        const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
-        robotHappiness += event.effect.happiness;
-        robotSummary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
+function triggerSicknessEvent() {
+    const sicknessChance = Math.random();
+    if (sicknessChance < 0.5) {
+        happiness += randomEvents.find(e => e.name === "Sickness").effect.happiness;
+        summary.push({ text: "Random Event: Sickness (-15% happiness)", color: "orange" });
     }
 }
 
-function simulateRobotDecision(decision) {
-    robotHappiness += decision.happiness || 0;
-    robotSummary.push({
-        text: `${decision.text} (${decision.happiness > 0 ? "+" : ""}${decision.happiness}% happiness)`,
-        color: decision.happiness > 0 ? "green" : decision.happiness < 0 ? "red" : "black"
+function handleChoice(choice) {
+    happiness += choice.happiness || 0;
+    summary.push({
+        text: `${choice.text} (${choice.happiness > 0 ? "+" : ""}${choice.happiness}% happiness)`,
+        color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
     });
 
-    robotDecisionsMade++;
+    decisionsMade++;
+    adjustEventChances(choice);
 
-    if (robotDecisionsMade > 3) {
-        simulateRobotEvents();
+    // Special case: Expired food decision
+    if (choice.text === "Keep distributing expired food") {
+        triggerSicknessEvent(); // 50% chance of triggering sickness
     }
-}
 
-function simulateRobot() {
-    for (let i = 0; i < robotDecisions.length; i++) {
-        simulateRobotDecision(robotDecisions[i]);
-    }
+    randomEvent(() => {
+        currentScenario++;
+        loadScenario(currentScenario);
+    });
 }
 
 function loadScenario(index) {
@@ -178,22 +178,6 @@ function loadScenario(index) {
     document.getElementById("option2").onclick = () => handleChoice(scenario.option2);
 }
 
-function handleChoice(choice) {
-    happiness += choice.happiness || 0;
-    summary.push({
-        text: `${choice.text} (${choice.happiness > 0 ? "+" : ""}${choice.happiness}% happiness)`,
-        color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
-    });
-
-    decisionsMade++;
-    adjustEventChances(choice);
-
-    randomEvent(() => {
-        currentScenario++;
-        loadScenario(currentScenario);
-    });
-}
-
 function loadSummary() {
     const gameContainer = document.getElementById("game-container");
     const summaryDiv = document.createElement("div");
@@ -224,9 +208,8 @@ function loadSummary() {
         </div>
     `;
 
-    gameContainer.innerHTML = ""; // Clear the game container
+    gameContainer.innerHTML = "";
     gameContainer.appendChild(summaryDiv);
 }
-
 
 loadScenario(0);
