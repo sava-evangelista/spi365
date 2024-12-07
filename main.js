@@ -91,32 +91,36 @@ const scenarios = [
     }
     }
     
-    function randomEvent(callback) {
+    
+function randomEvent(callback) {
     if (decisionsMade <= 3) {
-    callback(); // Skip random events
-    return;
+        callback(); // Skip random events
+        return;
     }
-    
+
     const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
-    
+
     if (triggeredEvents.length > 0) {
-    const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
-    happiness += event.effect.happiness;
-    summary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
-    
-    const scenarioContainer = document.getElementById("scenario-container");
-    const optionsContainer = document.getElementById("options-container");
-    
-    scenarioContainer.innerHTML = `<p>Random Event: ${event.name} occurred!</p>`;
-    optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
-    
-    document.getElementById("continue-button").onclick = () => {
-    callback();
-    };
+        const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
+        happiness += event.effect.happiness;
+        summary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
+
+        const scenarioContainer = document.getElementById("scenario-container");
+        const optionsContainer = document.getElementById("options-container");
+
+        scenarioContainer.innerHTML = `
+            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">Random Event</h2>
+            <p>${event.name} occurred! (-10% happiness)</p>
+        `;
+        optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
+
+        document.getElementById("continue-button").onclick = () => {
+            callback();
+        };
     } else {
-    callback(); // No random event, proceed normally
+        callback(); // No random event, proceed normally
     }
-    }
+}
     
     function simulateRobotEvents() {
     const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
@@ -149,35 +153,41 @@ const scenarios = [
     }
     
     function loadScenario(index) {
-    if (index >= scenarios.length) {
-    loadSummary();
-    return;
+        if (index >= scenarios.length) {
+            loadSummary();
+            return;
+        }
+    
+        const scenario = scenarios[index];
+        const scenarioContainer = document.getElementById("scenario-container");
+        const optionsContainer = document.getElementById("options-container");
+    
+        // Hide title and stats after the first screen
+        if (!scenario.startSlide) {
+            document.querySelector("h1").style.display = "none";
+            document.getElementById("stats").style.display = "none";
+        }
+    
+        if (scenario.startSlide) {
+            scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
+            optionsContainer.innerHTML = `<button id="start-button">Start</button>`;
+            document.getElementById("start-button").onclick = () => {
+                currentScenario++;
+                loadScenario(currentScenario);
+            };
+            return;
+        }
+    
+        scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
+        optionsContainer.innerHTML = `
+            <button id="option1">${scenario.option1.text}</button>
+            <button id="option2">${scenario.option2.text}</button>
+        `;
+    
+        document.getElementById("option1").onclick = () => handleChoice(scenario.option1);
+        document.getElementById("option2").onclick = () => handleChoice(scenario.option2);
     }
     
-    const scenario = scenarios[index];
-    const scenarioContainer = document.getElementById("scenario-container");
-    const optionsContainer = document.getElementById("options-container");
-    
-    if (scenario.startSlide) {
-    scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
-    optionsContainer.innerHTML = `<button id="start-button">Start</button>`;
-    document.getElementById("start-button").onclick = () => {
-    currentScenario++;
-    loadScenario(currentScenario);
-    };
-    return;
-    }
-    
-    scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
-    optionsContainer.innerHTML = `
-           <button id="option1">${scenario.option1.text}</button>
-           <button id="option2">${scenario.option2.text}</button>
-       `;
-    
-    document.getElementById("option1").onclick = () => handleChoice(scenario.option1);
-    document.getElementById("option2").onclick = () => handleChoice(scenario.option2);
-    }
-
     function triggerSicknessEvent() {
         if (Math.random() < 0.5) { // 50% chance
             happiness -= 15; // Decrease happiness by 15
