@@ -203,21 +203,30 @@ function loadSummary() {
     summaryDiv.id = "summary";
     summaryDiv.innerHTML = `
         <h2>Game Over</h2>
-        <h3>Your Decisions:</h3>
-        <div>${summary
-            .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
-            .join("")}</div>
-        <h3>Robot Decisions:</h3>
-        <div>${robotSummary
-            .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
-            .join("")}</div>
+        <div style="display: flex; justify-content: space-between;">
+            <div style="width: 45%;">
+                <h3>Your Decisions:</h3>
+                <div>${summary
+                    .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
+                    .join("")}</div>
+            </div>
+            <div style="width: 45%;">
+                <h3>Robot's Decisions:</h3>
+                <div>${robotSummary
+                    .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
+                    .join("")}</div>
+            </div>
+        </div>
         <h3>Results:</h3>
-        <p>Your Final Public Happiness: ${happiness}%</p>
-        <p>Robot's Final Public Happiness: ${robotHappiness}%</p>
+        <div style="text-align: center;">
+            <p><strong>Your Final Public Happiness:</strong> ${happiness}%</p>
+            <p><strong>Robot's Final Public Happiness:</strong> ${robotHappiness}%</p>
+        </div>
     `;
 
-    gameContainer.innerHTML = "";
+    gameContainer.innerHTML = ""; // Clear the game container
     gameContainer.appendChild(summaryDiv);
 }
+
 
 loadScenario(0);
