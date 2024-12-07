@@ -55,11 +55,6 @@ const randomEvents = [
 let currentScenario = 0;
 let happiness = 70;
 let summary = [];
-let eventPending = false; // Track if a random event is pending
-
-function updateStats() {
-    // Public happiness stat is not displayed during decisions
-}
 
 function randomEvent(callback) {
     const roll = Math.random() * 100;
@@ -80,8 +75,6 @@ function randomEvent(callback) {
             document.getElementById("continue-button").onclick = () => {
                 callback();
             };
-
-            eventPending = true; // Mark that the event has been handled
             return;
         }
     }
@@ -123,7 +116,7 @@ function loadScenario(index) {
 function handleChoice(choice) {
     happiness += choice.happiness || 0;
     summary.push({
-        text: choice.text,
+        text: `${choice.text} (${choice.happiness > 0 ? "+" : ""}${choice.happiness}% happiness)`,
         color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
     });
 
