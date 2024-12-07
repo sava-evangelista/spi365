@@ -127,20 +127,23 @@ function simulateRobotEvents() {
     }
 }
 
+function simulateRobotDecision(decision) {
+    robotHappiness += decision.happiness || 0;
+    robotSummary.push({
+        text: `${decision.text} (${decision.happiness > 0 ? "+" : ""}${decision.happiness}% happiness)`,
+        color: decision.happiness > 0 ? "green" : decision.happiness < 0 ? "red" : "black"
+    });
+
+    robotDecisionsMade++;
+
+    if (robotDecisionsMade > 3) {
+        simulateRobotEvents();
+    }
+}
+
 function simulateRobot() {
     for (let i = 0; i < robotDecisions.length; i++) {
-        const decision = robotDecisions[i];
-        robotHappiness += decision.happiness || 0;
-        robotSummary.push({
-            text: `${decision.text} (${decision.happiness > 0 ? "+" : ""}${decision.happiness}% happiness)`,
-            color: decision.happiness > 0 ? "green" : decision.happiness < 0 ? "red" : "black"
-        });
-
-        robotDecisionsMade++;
-
-        if (robotDecisionsMade > 3) {
-            simulateRobotEvents();
-        }
+        simulateRobotDecision(robotDecisions[i]);
     }
 }
 
@@ -194,7 +197,7 @@ function loadSummary() {
     const gameContainer = document.getElementById("game-container");
     const summaryDiv = document.createElement("div");
 
-    simulateRobot();
+    simulateRobot(); // Simulate the robot's decisions and events
 
     summaryDiv.id = "summary";
     summaryDiv.innerHTML = `
