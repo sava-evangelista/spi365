@@ -75,6 +75,11 @@ function randomEvent() {
 }
 
 function loadScenario(index) {
+    if (index >= scenarios.length) {
+        loadSummary(); // Transition to the summary screen
+        return;
+    }
+
     const scenario = scenarios[index];
     const scenarioContainer = document.getElementById("scenario-container");
     const optionsContainer = document.getElementById("options-container");
@@ -113,14 +118,36 @@ function handleChoice(choice) {
     loadScenario(currentScenario);
 }
 
-function endGame() {
+function loadSummary() {
+    const gameContainer = document.getElementById("game-container");
     const summaryDiv = document.createElement("div");
+
+    // Robot decisions for comparison
+    const robotDecisions = [
+        "No surveillance (-10% happiness)",
+        "No police (+10% happiness)",
+        "Bread (+5% happiness)",
+        "3 strong men (+10% happiness)",
+        "2 moderately hungry people (+10% happiness)",
+        "Distribute expired food (+20% happiness, +50% sickness)",
+        "Host ceremonies (+5% happiness)"
+    ];
+    const robotHappiness = 70 - 10 + 10 + 5 + 10 + 10 + 20 + 5; // Calculate robot's happiness
+
     summaryDiv.id = "summary";
-    summaryDiv.innerHTML = `<h2>Game Over</h2>
+    summaryDiv.innerHTML = `
+        <h2>Game Over</h2>
         <h3>Your Decisions:</h3>
-        <ul>${summary.map(item => `<li>${item}</li>`).join("")}</ul>`;
-    document.getElementById("game-container").appendChild(summaryDiv);
-    document.getElementById("options-container").remove();
+        <ul>${summary.map(item => `<li>${item}</li>`).join("")}</ul>
+        <h3>Robot Decisions:</h3>
+        <ul>${robotDecisions.map(item => `<li>${item}</li>`).join("")}</ul>
+        <h3>Results:</h3>
+        <p>Your Final Public Happiness: ${happiness}%</p>
+        <p>Robot's Final Public Happiness: ${robotHappiness}%</p>
+    `;
+
+    gameContainer.innerHTML = ""; // Clear the game container
+    gameContainer.appendChild(summaryDiv); // Show the summary
 }
 
 // Initialize the game
