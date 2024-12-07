@@ -170,110 +170,108 @@ const scenarios = [
     
     scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
     optionsContainer.innerHTML = `
-              <button id="option1">${scenario.option1.text}</button>
-              <button id="option2">${scenario.option2.text}</button>
-          `;
+           <button id="option1">${scenario.option1.text}</button>
+           <button id="option2">${scenario.option2.text}</button>
+       `;
     
     document.getElementById("option1").onclick = () => handleChoice(scenario.option1);
     document.getElementById("option2").onclick = () => handleChoice(scenario.option2);
     }
-    
+
     function triggerSicknessEvent() {
-    if (Math.random() < 0.5) { // 50% chance
-    happiness -= 15; // Decrease happiness by 15
-    summary.push({ text: "Random Event: Sickness (-15% happiness)", color: "orange" });
+        if (Math.random() < 0.5) { // 50% chance
+            happiness -= 15; // Decrease happiness by 15
+            summary.push({ text: "Random Event: Sickness (-15% happiness)", color: "orange" });
+        }
     }
-    }
-    
+
     function loadWhatsNext() {
-    const gameContainer = document.getElementById("game-container");
+        const gameContainer = document.getElementById("game-container");
     
-    gameContainer.innerHTML = `
-               <h2>What's Next?</h2>
-               <p>
-                   Congratulations on completing the game! Your decisions shaped the outcome of your society.
-                   Reflect on what went well and what could have been done differently. Would you make the same
-                   choices if you played again?
-               </p>
-                <div style="text-align: center; margin-top: 20px;">
-                    <button id="play-again-button" style="padding: 10px 20px; font-size: 16px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Play Again</button>
-                </div>
-           `;
+        gameContainer.innerHTML = `
+            <h2>What's Next?</h2>
+            <p>
+                Congratulations on completing the game! Your decisions shaped the outcome of your society.
+                Reflect on what went well and what could have been done differently. Would you make the same
+                choices if you played again?
+            </p>
+        `;
     
-    document.getElementById("play-again-button").onclick = resetGame;
+        document.getElementById("play-again-button").onclick = resetGame;
     }
     
     function resetGame() {
-    console.log("Resetting game...");
-    currentScenario = 0;
-    happiness = 70;
-    summary = [];
-    decisionsMade = 0;
-    robotHappiness = 70;
-    robotSummary = [];
-    console.log("Variables reset. Loading first scenario...");
-    loadScenario(0);
+        console.log("Resetting game...");
+        currentScenario = 0;
+        happiness = 70;
+        summary = [];
+        decisionsMade = 0;
+        robotHappiness = 70;
+        robotSummary = [];
+        console.log("Variables reset. Loading first scenario...");
+        loadScenario(0);
     }
     
     function handleChoice(choice) {
-    happiness += choice.happiness || 0;
-    summary.push({
-    text: `${choice.text} (${choice.happiness > 0 ? "+" : ""}${choice.happiness}% happiness)`,
-    color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
-    });
+        happiness += choice.happiness || 0;
+        summary.push({
+            text: `${choice.text} (${choice.happiness > 0 ? "+" : ""}${choice.happiness}% happiness)`,
+            color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
+        });
     
-    decisionsMade++;
-    adjustEventChances(choice);
+        decisionsMade++;
+        adjustEventChances(choice);
     
-    // Special case: Expired food decision
-    if (choice.text === "Keep distributing expired food") {
-    triggerSicknessEvent(); // Trigger the sickness event
-    }
+        // Special case: Expired food decision
+        if (choice.text === "Keep distributing expired food") {
+            triggerSicknessEvent(); // Trigger the sickness event
+        }
     
-    randomEvent(() => {
-    currentScenario++;
-    loadScenario(currentScenario);
-    });
+        randomEvent(() => {
+            currentScenario++;
+            loadScenario(currentScenario);
+        });
     }
     
     function loadSummary() {
-    const gameContainer = document.getElementById("game-container");
-    const summaryDiv = document.createElement("div");
+        const gameContainer = document.getElementById("game-container");
+        const summaryDiv = document.createElement("div");
     
-    simulateRobot(); // Simulate the robot's decisions and events
+        simulateRobot(); // Simulate the robot's decisions and events
     
-    summaryDiv.id = "summary";
-    summaryDiv.innerHTML = `
-               <h2>Game Over</h2>
-               <div style="display: flex; justify-content: space-between;">
-                   <div style="width: 45%;">
-                       <h3>Your Decisions:</h3>
-                       <div>${summary
-                           .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
-                           .join("")}</div>
-                   </div>
-                   <div style="width: 45%;">
-                       <h3>Robot's Decisions:</h3>
-                       <div>${robotSummary
-                           .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
-                           .join("")}</div>
-                   </div>
-               </div>
-               <h3>Results:</h3>
-               <div style="text-align: center;">
-                   <p><strong>Your Final Public Happiness:</strong> ${happiness}%</p>
-                   <p><strong>Robot's Final Public Happiness:</strong> ${robotHappiness}%</p>
-               </div>
-               <div style="text-align: center; margin-top: 20px;">
-                   <button id="whats-next-button" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">What's Next?</button>
-               </div>
-           `;
+        summaryDiv.id = "summary";
+        summaryDiv.innerHTML = `
+            <h2>Game Over</h2>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 45%;">
+                    <h3>Your Decisions:</h3>
+                    <div>${summary
+                        .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
+                        .join("")}</div>
+                </div>
+                <div style="width: 45%;">
+                    <h3>Robot's Decisions:</h3>
+                    <div>${robotSummary
+                        .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
+                        .join("")}</div>
+                </div>
+            </div>
+            <h3>Results:</h3>
+            <div style="text-align: center;">
+                <p><strong>Your Final Public Happiness:</strong> ${happiness}%</p>
+                <p><strong>Robot's Final Public Happiness:</strong> ${robotHappiness}%</p>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="whats-next-button" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">What's Next?</button>
+            </div>
+        `;
     
-    gameContainer.innerHTML = ""; // Clear the game container
-    gameContainer.appendChild(summaryDiv);
+        gameContainer.innerHTML = ""; // Clear the game container
+        gameContainer.appendChild(summaryDiv);
     
-    document.getElementById("whats-next-button").onclick = loadWhatsNext;
+        document.getElementById("whats-next-button").onclick = loadWhatsNext;
     }
     
     
     
+    loadScenario(0);
