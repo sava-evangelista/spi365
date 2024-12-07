@@ -3,55 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Shortage Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
-        }
-        #game-container {
-            width: 80%;
-            max-width: 800px;
-            background: white;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        button {
-            margin: 10px 5px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        h2, h3 {
-            margin-top: 0;
-        }
-        p {
-            margin: 5px 0;
-        }
-    </style>
+    <title>Decision-Making Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="game-container">
         <h1>Food Shortage Decision-Making Game</h1>
-        <div id="stats">
-            <p>Public Happiness: <span id="happiness">70</span>%</p>
+        <div id="scenario-container">
+            <p id="scenario-text">You are in charge of a society with a food shortage. Make difficult decisions to balance happiness and stability.</p>
         </div>
-        <div id="scenario-container"></div>
-        <div id="options-container"></div>
+        <div id="options-container">
+            <button id="option1">Option 1</button>
+            <button id="option2">Option 2</button>
+        </div>
     </div>
     <script src="main.js"></script>
 </body>
