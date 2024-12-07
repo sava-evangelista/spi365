@@ -202,15 +202,17 @@ const scenarios = [
     
         document.getElementById("play-again-button").onclick = resetGame;
     }
-
+    
     function resetGame() {
+        console.log("Resetting game...");
         currentScenario = 0;
         happiness = 70;
         summary = [];
         decisionsMade = 0;
         robotHappiness = 70;
         robotSummary = [];
-        loadScenario(0); // Start from the beginning
+        console.log("Variables reset. Loading first scenario...");
+        loadScenario(0);
     }
     
     function handleChoice(choice) {
