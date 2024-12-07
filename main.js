@@ -196,20 +196,6 @@ const scenarios = [
                 choices if you played again?
             </p>
         `;
-    
-        document.getElementById("play-again-button").onclick = resetGame;
-    }
-    
-    function resetGame() {
-        console.log("Resetting game...");
-        currentScenario = 0;
-        happiness = 70;
-        summary = [];
-        decisionsMade = 0;
-        robotHappiness = 70;
-        robotSummary = [];
-        console.log("Variables reset. Loading first scenario...");
-        loadScenario(0);
     }
     
     function handleChoice(choice) {
