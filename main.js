@@ -57,8 +57,20 @@ let happiness = 70;
 let summary = [];
 let decisionsMade = 0; // Counter for decisions made
 
+const robotDecisions = [
+    { text: "No surveillance", happiness: -10, robbing: 10 },
+    { text: "No police", happiness: 10, robbing: 5 },
+    { text: "Bread", happiness: 5, racoon: 10 },
+    { text: "3 strong men", happiness: 10 },
+    { text: "2 moderately hungry people", happiness: 10 },
+    { text: "Keep distributing expired food", happiness: 20, sickness: 50 },
+    { text: "Host ceremonies", happiness: 5, robbing: 5 }
+];
 
-// Adjust event chances dynamically
+let robotHappiness = 70;
+let robotSummary = [];
+let robotDecisionsMade = 0;
+
 function adjustEventChances(effect) {
     if (effect.robbing !== undefined) {
         const event = randomEvents.find(e => e.name === "Robbing");
@@ -79,7 +91,6 @@ function adjustEventChances(effect) {
 }
 
 function randomEvent(callback) {
-    // Only allow random events after the first 3 decisions
     if (decisionsMade <= 3) {
         callback(); // Skip random events
         return;
@@ -88,11 +99,10 @@ function randomEvent(callback) {
     const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
 
     if (triggeredEvents.length > 0) {
-        const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)]; // Pick one random event
+        const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
         happiness += event.effect.happiness;
         summary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
 
-        // Show random event screen
         const scenarioContainer = document.getElementById("scenario-container");
         const optionsContainer = document.getElementById("options-container");
 
@@ -107,10 +117,36 @@ function randomEvent(callback) {
     }
 }
 
+function simulateRobotEvents() {
+    const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
+
+    if (triggeredEvents.length > 0) {
+        const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
+        robotHappiness += event.effect.happiness;
+        robotSummary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
+    }
+}
+
+function simulateRobot() {
+    for (let i = 0; i < robotDecisions.length; i++) {
+        const decision = robotDecisions[i];
+        robotHappiness += decision.happiness || 0;
+        robotSummary.push({
+            text: `${decision.text} (${decision.happiness > 0 ? "+" : ""}${decision.happiness}% happiness)`,
+            color: decision.happiness > 0 ? "green" : decision.happiness < 0 ? "red" : "black"
+        });
+
+        robotDecisionsMade++;
+
+        if (robotDecisionsMade > 3) {
+            simulateRobotEvents();
+        }
+    }
+}
 
 function loadScenario(index) {
     if (index >= scenarios.length) {
-        loadSummary(); // Transition to the summary screen
+        loadSummary();
         return;
     }
 
@@ -118,7 +154,6 @@ function loadScenario(index) {
     const scenarioContainer = document.getElementById("scenario-container");
     const optionsContainer = document.getElementById("options-container");
 
-    // Handle the first slide with a "Start" button
     if (scenario.startSlide) {
         scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
         optionsContainer.innerHTML = `<button id="start-button">Start</button>`;
@@ -129,7 +164,6 @@ function loadScenario(index) {
         return;
     }
 
-    // For other slides
     scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
     optionsContainer.innerHTML = `
         <button id="option1">${scenario.option1.text}</button>
@@ -147,7 +181,7 @@ function handleChoice(choice) {
         color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
     });
 
-    decisionsMade++; // Increment decision counter
+    decisionsMade++;
     adjustEventChances(choice);
 
     randomEvent(() => {
@@ -156,22 +190,11 @@ function handleChoice(choice) {
     });
 }
 
-
 function loadSummary() {
     const gameContainer = document.getElementById("game-container");
     const summaryDiv = document.createElement("div");
 
-    // Robot decisions for comparison
-    const robotDecisions = [
-        { text: "No surveillance (-10% happiness)", color: "red" },
-        { text: "No police (+10% happiness)", color: "green" },
-        { text: "Bread (+5% happiness)", color: "green" },
-        { text: "3 strong men (+10% happiness)", color: "green" },
-        { text: "2 moderately hungry people (+10% happiness)", color: "green" },
-        { text: "Distribute expired food (+20% happiness, +50% sickness)", color: "green" },
-        { text: "Host ceremonies (+5% happiness)", color: "green" }
-    ];
-    const robotHappiness = 70 - 10 + 10 + 5 + 10 + 10 + 20 + 5; // Calculate robot's happiness
+    simulateRobot();
 
     summaryDiv.id = "summary";
     summaryDiv.innerHTML = `
@@ -181,7 +204,7 @@ function loadSummary() {
             .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
             .join("")}</div>
         <h3>Robot Decisions:</h3>
-        <div>${robotDecisions
+        <div>${robotSummary
             .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
             .join("")}</div>
         <h3>Results:</h3>
@@ -189,9 +212,8 @@ function loadSummary() {
         <p>Robot's Final Public Happiness: ${robotHappiness}%</p>
     `;
 
-    gameContainer.innerHTML = ""; // Clear the game container
-    gameContainer.appendChild(summaryDiv); // Show the summary
+    gameContainer.innerHTML = "";
+    gameContainer.appendChild(summaryDiv);
 }
 
-// Initialize the game
 loadScenario(0);
