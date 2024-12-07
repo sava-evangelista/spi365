@@ -195,22 +195,14 @@ const scenarios = [
     }
     
     function loadSummary() {
-    const gameContainer = document.getElementById("game-container");
-    const summaryDiv = document.createElement("div");
+        const gameContainer = document.getElementById("game-container");
+        const summaryDiv = document.createElement("div");
     
-    simulateRobot(); // Simulate the robot's decisions and events
+        simulateRobot(); // Simulate the robot's decisions and events
     
-    summaryDiv.id = "summary";
-    summaryDiv.innerHTML = `
-           <h2>Game Over</h2>
-            <h3>Your Decisions:</h3>
-            <div>${summary
-                .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
-                .join("")}</div>
-            <h3>Robot Decisions:</h3>
-            <div>${robotSummary
-                .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
-                .join("")}</div>
+        summaryDiv.id = "summary";
+        summaryDiv.innerHTML = `
+            <h2>Game Over</h2>
             <div style="display: flex; justify-content: space-between;">
                 <div style="width: 45%;">
                     <h3>Your Decisions:</h3>
@@ -225,19 +217,17 @@ const scenarios = [
                         .join("")}</div>
                 </div>
             </div>
-           <h3>Results:</h3>
-            <p>Your Final Public Happiness: ${happiness}%</p>
-            <p>Robot's Final Public Happiness: ${robotHappiness}%</p>
+            <h3>Results:</h3>
             <div style="text-align: center;">
                 <p><strong>Your Final Public Happiness:</strong> ${happiness}%</p>
                 <p><strong>Robot's Final Public Happiness:</strong> ${robotHappiness}%</p>
             </div>
-       `;
+        `;
     
-        gameContainer.innerHTML = "";
         gameContainer.innerHTML = ""; // Clear the game container
-    gameContainer.appendChild(summaryDiv);
+        gameContainer.appendChild(summaryDiv);
     }
+    
     
     
     loadScenario(0);
