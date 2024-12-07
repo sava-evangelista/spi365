@@ -1,7 +1,7 @@
 const scenarios = [
     {
         text: "You are in charge of a society with a food shortage. Make difficult decisions to balance happiness and stability.",
-        startSlide: true // Special flag for the first slide
+        startSlide: true
     },
     {
         text: "Do you want to install cameras?",
@@ -50,13 +50,13 @@ let randomEvents = [
     { name: "Corruption", chance: 15, effect: { happiness: -10 } },
     { name: "Camera breaks", chance: 15, effect: { happiness: -10 } },
     { name: "Raccoon steals food", chance: 15, effect: { happiness: -10 } },
-    { name: "Sickness", chance: 0, effect: { happiness: -15 } } // Sickness event is conditionally triggered
+    { name: "Sickness", chance: 0, effect: { happiness: -15 } }
 ];
 
 let currentScenario = 0;
 let happiness = 70;
 let summary = [];
-let decisionsMade = 0; // Counter for decisions made
+let decisionsMade = 0;
 
 const robotDecisions = [
     { text: "Do not install cameras", happiness: 10, robbing: 10 },
@@ -71,7 +71,22 @@ const robotDecisions = [
 
 let robotHappiness = 70;
 let robotSummary = [];
-let robotDecisionsMade = 0;
+
+function simulateRobot() {
+    for (let i = 0; i < robotDecisions.length; i++) {
+        const decision = robotDecisions[i];
+        robotHappiness += decision.happiness || 0;
+        robotSummary.push({
+            text: `${decision.text} (${decision.happiness > 0 ? "+" : ""}${decision.happiness}% happiness)`,
+            color: decision.happiness > 0 ? "green" : decision.happiness < 0 ? "red" : "black"
+        });
+
+        if (decision.text === "Keep distributing expired food" && Math.random() < 0.5) {
+            robotHappiness -= 15;
+            robotSummary.push({ text: "Random Event: Sickness (-15% happiness)", color: "orange" });
+        }
+    }
+}
 
 function adjustEventChances(effect) {
     if (effect.robbing !== undefined) {
@@ -82,19 +97,11 @@ function adjustEventChances(effect) {
         const event = randomEvents.find(e => e.name === "Corruption");
         if (event) event.chance = Math.max(0, Math.min(100, event.chance + effect.corruption));
     }
-    if (effect.camera !== undefined) {
-        const event = randomEvents.find(e => e.name === "Camera breaks");
-        if (event) event.chance = Math.max(0, Math.min(100, event.chance + effect.camera));
-    }
-    if (effect.racoon !== undefined) {
-        const event = randomEvents.find(e => e.name === "Raccoon steals food");
-        if (event) event.chance = Math.max(0, Math.min(100, event.chance + effect.racoon));
-    }
 }
 
 function randomEvent(callback) {
     if (decisionsMade <= 3) {
-        callback(); // Skip random events
+        callback();
         return;
     }
 
@@ -115,14 +122,13 @@ function randomEvent(callback) {
             callback();
         };
     } else {
-        callback(); // No random event, proceed normally
+        callback();
     }
 }
 
 function triggerSicknessEvent() {
-    const sicknessChance = Math.random();
-    if (sicknessChance < 0.5) {
-        happiness += randomEvents.find(e => e.name === "Sickness").effect.happiness;
+    if (Math.random() < 0.5) {
+        happiness -= 15;
         summary.push({ text: "Random Event: Sickness (-15% happiness)", color: "orange" });
     }
 }
@@ -182,7 +188,7 @@ function loadSummary() {
     const gameContainer = document.getElementById("game-container");
     const summaryDiv = document.createElement("div");
 
-    simulateRobot(); // Simulate the robot's decisions and events
+    simulateRobot();
 
     summaryDiv.id = "summary";
     summaryDiv.innerHTML = `
