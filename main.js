@@ -45,7 +45,7 @@ const scenarios = [
     }
 ];
 
-const randomEvents = [
+let randomEvents = [
     { name: "Robbing", chance: 15, effect: { happiness: -10 } },
     { name: "Corruption", chance: 15, effect: { happiness: -10 } },
     { name: "Camera breaks", chance: 15, effect: { happiness: -10 } },
@@ -56,9 +56,30 @@ let currentScenario = 0;
 let happiness = 70;
 let summary = [];
 
+// Adjust event chances dynamically
+function adjustEventChances(effect) {
+    if (effect.robbing !== undefined) {
+        const event = randomEvents.find(e => e.name === "Robbing");
+        if (event) event.chance = Math.max(0, Math.min(100, event.chance + effect.robbing));
+    }
+    if (effect.corruption !== undefined) {
+        const event = randomEvents.find(e => e.name === "Corruption");
+        if (event) event.chance = Math.max(0, Math.min(100, event.chance + effect.corruption));
+    }
+    if (effect.camera !== undefined) {
+        const event = randomEvents.find(e => e.name === "Camera breaks");
+        if (event) event.chance = Math.max(0, Math.min(100, event.chance + effect.camera));
+    }
+    if (effect.racoon !== undefined) {
+        const event = randomEvents.find(e => e.name === "Raccoon steals food");
+        if (event) event.chance = Math.max(0, Math.min(100, event.chance + effect.racoon));
+    }
+}
+
 function randomEvent(callback) {
-    const roll = Math.random() * 100;
+    const roll = Math.random() * 100; // Generate a random number between 0 and 100
     let cumulativeChance = 0;
+
     for (const event of randomEvents) {
         cumulativeChance += event.chance;
         if (roll <= cumulativeChance) {
@@ -120,7 +141,10 @@ function handleChoice(choice) {
         color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
     });
 
-    // Trigger random event with a 50% probability
+    // Adjust chances based on the current decision
+    adjustEventChances(choice);
+
+    // Trigger random event based on updated probabilities
     randomEvent(() => {
         currentScenario++;
         loadScenario(currentScenario);
