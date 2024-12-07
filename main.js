@@ -5,43 +5,43 @@ const scenarios = [
     },
     {
         text: "Do you want to install cameras?",
-        option1: { text: "Install cameras (-10% happiness, -5% robbing)", happiness: -10, robbing: -5 },
-        option2: { text: "Do not install cameras (+10% happiness, +10% robbing)", happiness: 10, robbing: 10 }
+        option1: { text: "Install cameras", happiness: -10, robbing: -5 },
+        option2: { text: "Do not install cameras", happiness: 10, robbing: 10 }
     },
     {
         text: "Install facial recognition with cameras?",
-        option1: { text: "Install facial recognition (+5% camera, -20% happiness, -10% robbing)", happiness: -20, camera: 5, robbing: -10 },
-        option2: { text: "Do not install facial recognition (no change)", happiness: 0 }
+        option1: { text: "Install facial recognition", happiness: -20, camera: 5, robbing: -10 },
+        option2: { text: "Do not install facial recognition", happiness: 0 }
     },
     {
         text: "Employ extra police?",
-        option1: { text: "Employ extra police (-15% happiness, +10% corruption, -5% robbing)", happiness: -15, corruption: 10, robbing: -5 },
-        option2: { text: "Do not employ extra police (+10% happiness, +5% robbing)", happiness: 10, robbing: 5 }
+        option1: { text: "Employ extra police", happiness: -15, corruption: 10, robbing: -5 },
+        option2: { text: "Do not employ extra police", happiness: 10, robbing: 5 }
     },
     {
         text: "Choose food distribution type.",
-        option1: { text: "Choose bread (+5% happiness, +10% raccoon chance)", happiness: 5, racoon: 10 },
-        option2: { text: "Choose lentils (-5% happiness, -5% robbing)", happiness: -5, robbing: -5 }
+        option1: { text: "Choose bread", happiness: 5, racoon: 10 },
+        option2: { text: "Choose lentils", happiness: -5, robbing: -5 }
     },
     {
         text: "Who do you feed?",
-        option1: { text: "Feed 5 old people (+5% happiness)", happiness: 5 },
-        option2: { text: "Feed 3 strong men (+10% happiness)", happiness: 10 }
+        option1: { text: "Feed 5 old people", happiness: 5 },
+        option2: { text: "Feed 3 strong men", happiness: 10 }
     },
     {
         text: "Feed starving person or moderately hungry people?",
-        option1: { text: "Feed 1 starving person (+5% happiness)", happiness: 5 },
-        option2: { text: "Feed 2 moderately hungry people (+10% happiness)", happiness: 10 }
+        option1: { text: "Feed 1 starving person", happiness: 5 },
+        option2: { text: "Feed 2 moderately hungry people", happiness: 10 }
     },
     {
         text: "Distribute expired food?",
-        option1: { text: "Keep distributing expired food (+20% happiness, +50% sickness)", happiness: 20, sickness: 50 },
-        option2: { text: "Throw out expired food (-15% happiness, +20% raccoon chance)", happiness: -15, racoon: 20 }
+        option1: { text: "Keep distributing expired food", happiness: 20, sickness: 50 },
+        option2: { text: "Throw out expired food", happiness: -15, racoon: 20 }
     },
     {
         text: "Host death ceremonies?",
-        option1: { text: "Host ceremonies (+5% happiness, +5% robbing)", happiness: 5, robbing: 5 },
-        option2: { text: "Do not host ceremonies (-5% happiness)", happiness: -5 }
+        option1: { text: "Host ceremonies", happiness: 5, robbing: 5 },
+        option2: { text: "Do not host ceremonies", happiness: -5 }
     }
 ];
 
@@ -58,7 +58,7 @@ let summary = [];
 let eventPending = false; // Track if a random event is pending
 
 function updateStats() {
-    document.getElementById("happiness").textContent = happiness;
+    // Public happiness stat is not displayed during decisions
 }
 
 function randomEvent(callback) {
@@ -78,7 +78,6 @@ function randomEvent(callback) {
             optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
 
             document.getElementById("continue-button").onclick = () => {
-                updateStats();
                 callback();
             };
 
@@ -131,7 +130,6 @@ function handleChoice(choice) {
     // Trigger random event with a 50% probability
     randomEvent(() => {
         currentScenario++;
-        updateStats();
         loadScenario(currentScenario);
     });
 }
@@ -173,5 +171,4 @@ function loadSummary() {
 }
 
 // Initialize the game
-updateStats();
 loadScenario(0);
