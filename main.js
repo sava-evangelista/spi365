@@ -1,5 +1,9 @@
 const scenarios = [
     {
+        text: "You are in charge of a society with a food shortage. Make difficult decisions to balance happiness and stability.",
+        startSlide: true // Special flag for the first slide
+    },
+    {
         text: "Do you want to install cameras?",
         option1: { text: "Yes", happiness: -10, robbing: -5 },
         option2: { text: "No", happiness: 10, robbing: 10 }
@@ -71,16 +75,28 @@ function randomEvent() {
 }
 
 function loadScenario(index) {
-    if (index >= scenarios.length) {
-        endGame();
+    const scenario = scenarios[index];
+    const scenarioContainer = document.getElementById("scenario-container");
+    const optionsContainer = document.getElementById("options-container");
+
+    // Handle the first slide with a "Start" button
+    if (scenario.startSlide) {
+        scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
+        optionsContainer.innerHTML = `<button id="start-button">Start</button>`;
+        document.getElementById("start-button").onclick = () => {
+            currentScenario++;
+            loadScenario(currentScenario);
+        };
         return;
     }
-    const scenario = scenarios[index];
-    document.getElementById("scenario-text").textContent = scenario.text;
-    document.getElementById("option1").textContent = scenario.option1.text;
-    document.getElementById("option2").textContent = scenario.option2.text;
 
-    // Ensure click handlers are updated correctly for each scenario
+    // For other slides
+    scenarioContainer.innerHTML = `<p>${scenario.text}</p>`;
+    optionsContainer.innerHTML = `
+        <button id="option1">${scenario.option1.text}</button>
+        <button id="option2">${scenario.option2.text}</button>
+    `;
+
     document.getElementById("option1").onclick = () => handleChoice(scenario.option1);
     document.getElementById("option2").onclick = () => handleChoice(scenario.option2);
 }
