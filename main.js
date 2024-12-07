@@ -55,12 +55,13 @@ const randomEvents = [
 let currentScenario = 0;
 let happiness = 70;
 let summary = [];
+let eventPending = false; // Track if a random event is pending
 
 function updateStats() {
     document.getElementById("happiness").textContent = happiness;
 }
 
-function randomEvent() {
+function randomEvent(callback) {
     const roll = Math.random() * 100;
     let cumulativeChance = 0;
     for (const event of randomEvents) {
@@ -68,10 +69,24 @@ function randomEvent() {
         if (roll <= cumulativeChance) {
             happiness += event.effect.happiness;
             summary.push(`Random Event: ${event.name} (-10% happiness)`);
-            updateStats();
+
+            // Show random event screen
+            const scenarioContainer = document.getElementById("scenario-container");
+            const optionsContainer = document.getElementById("options-container");
+
+            scenarioContainer.innerHTML = `<p>Random Event: ${event.name} occurred!</p>`;
+            optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
+
+            document.getElementById("continue-button").onclick = () => {
+                updateStats();
+                callback();
+            };
+
+            eventPending = true; // Mark that the event has been handled
             return;
         }
     }
+    callback(); // No random event, proceed normally
 }
 
 function loadScenario(index) {
@@ -111,11 +126,11 @@ function handleChoice(choice) {
     summary.push(choice.text + ` (${choice.happiness || 0}% happiness)`);
 
     // Trigger random event with a 50% probability
-    if (Math.random() < 0.5) randomEvent();
-
-    currentScenario++;
-    updateStats();
-    loadScenario(currentScenario);
+    randomEvent(() => {
+        currentScenario++;
+        updateStats();
+        loadScenario(currentScenario);
+    });
 }
 
 function loadSummary() {
