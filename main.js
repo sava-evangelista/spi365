@@ -147,15 +147,15 @@ function handleChoice(choice) {
         color: choice.happiness > 0 ? "green" : choice.happiness < 0 ? "red" : "black"
     });
 
-    // Adjust chances based on the current decision
+    decisionsMade++; // Increment decision counter
     adjustEventChances(choice);
 
-    // Trigger random event based on updated probabilities
     randomEvent(() => {
         currentScenario++;
         loadScenario(currentScenario);
     });
 }
+
 
 function loadSummary() {
     const gameContainer = document.getElementById("game-container");
