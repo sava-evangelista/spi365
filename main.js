@@ -184,6 +184,34 @@ const scenarios = [
             summary.push({ text: "Random Event: Sickness (-15% happiness)", color: "orange" });
         }
     }
+
+    function loadWhatsNext() {
+        const gameContainer = document.getElementById("game-container");
+    
+        gameContainer.innerHTML = `
+            <h2>What's Next?</h2>
+            <p>
+                Congratulations on completing the game! Your decisions shaped the outcome of your society.
+                Reflect on what went well and what could have been done differently. Would you make the same
+                choices if you played again?
+            </p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="play-again-button" style="padding: 10px 20px; font-size: 16px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Play Again</button>
+            </div>
+        `;
+    
+        document.getElementById("play-again-button").onclick = resetGame;
+    }
+
+    function resetGame() {
+        currentScenario = 0;
+        happiness = 70;
+        summary = [];
+        decisionsMade = 0;
+        robotHappiness = 70;
+        robotSummary = [];
+        loadScenario(0); // Start from the beginning
+    }
     
     function handleChoice(choice) {
         happiness += choice.happiness || 0;
@@ -234,10 +262,15 @@ const scenarios = [
                 <p><strong>Your Final Public Happiness:</strong> ${happiness}%</p>
                 <p><strong>Robot's Final Public Happiness:</strong> ${robotHappiness}%</p>
             </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="whats-next-button" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">What's Next?</button>
+            </div>
         `;
     
         gameContainer.innerHTML = ""; // Clear the game container
         gameContainer.appendChild(summaryDiv);
+    
+        document.getElementById("whats-next-button").onclick = loadWhatsNext;
     }
     
     
