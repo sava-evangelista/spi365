@@ -59,6 +59,7 @@ let decisionsMade = 0; // Counter for decisions made
 
 const robotDecisions = [
     { text: "Do not install cameras", happiness: 10, robbing: 10 },
+    { text: "Do not install facial recognition", happiness: 0 },
     { text: "Do not employ extra police", happiness: 10, robbing: 5 },
     { text: "Choose bread", happiness: 5, racoon: 10 },
     { text: "Feed 3 strong men", happiness: 10 },
