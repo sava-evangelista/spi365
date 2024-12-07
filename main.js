@@ -4,7 +4,7 @@ const scenarios = [
     startSlide: true // Special flag for the first slide
     },
     {
-    text: "Do you want to install cameras?",
+    text: "Do you want to install cameras? AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH HDAHSDH AHSDH AHSDH AHSDH AHSHD HASH DHASH DHASH DHASH HHSA HHD HADSH HSDH ",
     option1: { text: "Install cameras", happiness: -10, robbing: -5 },
     option2: { text: "Do not install cameras", happiness: 10, robbing: 10 }
     },
