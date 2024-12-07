@@ -55,6 +55,8 @@ let randomEvents = [
 let currentScenario = 0;
 let happiness = 70;
 let summary = [];
+let decisionsMade = 0; // Counter for decisions made
+
 
 // Adjust event chances dynamically
 function adjustEventChances(effect) {
@@ -77,6 +79,12 @@ function adjustEventChances(effect) {
 }
 
 function randomEvent(callback) {
+    // Only allow random events after the first 3 decisions
+    if (decisionsMade <= 3) {
+        callback(); // Skip random events
+        return;
+    }
+
     const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
 
     if (triggeredEvents.length > 0) {
