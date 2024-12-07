@@ -1,45 +1,45 @@
 const scenarios = [
     {
-    text: "Welcome to Survival Choices, a decision-making game where you take on the role of leader in a society teetering on the brink of collapse. A devastating food shortage has gripped your community, forcing you to make critical decisions that will shape the future of your people. Every choice matters: Who gets priority when supplies are scarce—the young, the sick, or the strong? Every choice you make not only impacts survival but also the morale and unity of your people. Can you navigate these challenges while keeping the community happy?",
+    text: "Welcome to Survival Choices, a decision-making game where you take on the role of leader in a society teetering on the brink of collapse. A devastating food shortage has gripped your community, forcing you to make critical decisions that will shape the future of your people. Every choice you make not only impacts survival but also the morale and unity of your people. Can you navigate these challenges while keeping the community happy?",
     startSlide: true // Special flag for the first slide
     },
     {
-    text: "Do you want to install cameras?",
+    text: "First, you must decide how much security should be installed to look over the food reserves.",
     option1: { text: "Install cameras", happiness: -10, robbing: -5 },
     option2: { text: "Do not install cameras", happiness: 10, robbing: 10 }
     },
     {
-    text: "Install facial recognition with cameras?",
+    text: "Some of your peers are worried simple cameras aren't enough, should they install facial recognition software for the camera system?",
     option1: { text: "Install facial recognition", happiness: -20, camera: 5, robbing: -10 },
     option2: { text: "Do not install facial recognition", happiness: 0 }
     },
     {
-    text: "Employ extra police?",
+    text: "Several rule-abiding citizens insist that there still isn't enough security preventing others from stealing food, should police be placed near the food reserves?",
     option1: { text: "Employ extra police", happiness: -15, corruption: 10, robbing: -5 },
     option2: { text: "Do not employ extra police", happiness: 10, robbing: 5 }
     },
     {
-    text: "Choose food distribution type.",
+    text: "What food should the community stock up on and distribute? While lentils are packed with nutrients and can feed much more, white bread tastes a lot better.",
     option1: { text: "Choose bread", happiness: 5, racoon: 10 },
     option2: { text: "Choose lentils", happiness: -5, robbing: -5 }
     },
     {
-    text: "Who do you feed?",
-    option1: { text: "Feed 5 old people", happiness: 5 },
+    text: "There isn't enough food to go around at breakfast, you must pick one of these groups to feed, while the other stays hungry.",
+    option1: { text: "Feed 5 elderly", happiness: 5 },
     option2: { text: "Feed 3 strong men", happiness: 10 }
     },
     {
-    text: "Feed starving person or moderately hungry people?",
+    text: "We've misplaced some rations of food during the day, and now it is dinner time. You must pick another one of these groups to feed.",
     option1: { text: "Feed 1 starving person", happiness: 5 },
     option2: { text: "Feed 2 moderately hungry people", happiness: 10 }
     },
     {
-    text: "Distribute expired food?",
-    option1: { text: "Keep distributing expired food", happiness: 20, sickness: 50 },
-    option2: { text: "Throw out expired food", happiness: -15, racoon: 20 }
+    text: "You've found the missing food rations, but they look past their due date. What do you do with the expired food?",
+    option1: { text: "Distributed the expired food", happiness: 20, sickness: 50 },
+    option2: { text: "Throw out the expired food", happiness: -15, racoon: 20 }
     },
     {
-    text: "Host death ceremonies?",
+    text: "Because of the long lasting starvation, some members of the community have passed away. Despite the desire to honor their deaths, it will take a lot of energy, and therefore food, to host ceremonies. What should the community do?",
     option1: { text: "Host ceremonies", happiness: 5, robbing: 5 },
     option2: { text: "Do not host ceremonies", happiness: -5 }
     }
