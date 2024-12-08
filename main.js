@@ -13,13 +13,13 @@ const scenarios = [
     text: "Some of your peers are worried simple cameras aren't enough, should they install facial recognition software for the camera system?",
     option1: { text: "Install facial recognition", happiness: -20, camera: 5, robbing: -10 },
     option2: { text: "Do not install facial recognition", happiness: 0 },
-    image: "facial.png"
+    image: "fixed2.png"
     },
     {
     text: "Several rule-abiding citizens insist that there still isn't enough security preventing others from stealing food, should police be placed near the food reserves?",
     option1: { text: "Employ extra police", happiness: -15, corruption: 10, robbing: -5 },
     option2: { text: "Do not employ extra police", happiness: 10, robbing: 5 },
-    image: "police.jpg"
+    image: "fixed3.png"
     },
     {
     text: "What food should the community stock up on and distribute? While lentils are packed with nutrients and can feed much more, white bread tastes a lot better.",
@@ -43,21 +43,21 @@ const scenarios = [
     text: "You've found the missing food rations, but they look past their due date. What do you do with the expired food?",
     option1: { text: "Distributed the expired food", happiness: 20, sickness: 50 },
     option2: { text: "Throw out the expired food", happiness: -15, racoon: 20 },
-    image: "expired.png"
+    image: "fixedexpired.png"
     },
     {
     text: "Because of the long lasting starvation, some members of the community have passed away. Despite the desire to honor their deaths, it will take a lot of energy, and therefore food, to host ceremonies. What should the community do?",
     option1: { text: "Host ceremonies", happiness: 5, robbing: 5 },
     option2: { text: "Do not host ceremonies", happiness: -5 },
-    image: "death.png"
+    image: "fixeddeath.png"
     }
     ];
     
     let randomEvents = [
         { name: "Oh no! Burglars from another group have stolen some of your food. I guess you didn't install enough security...", summaryName: "Robbing", chance: 15, effect: { happiness: -10 }, image: "robbers.png" },
-        { name: "Oh no! Some of the people in the community have stolen extra rations. I guess you didn't install enough security...", summaryName: "Corruption", chance: 15, effect: { happiness: -10 }, image: "corruption.png" },
-        { name: "Oh no! Some of the surveillance cameras are malfunctioning. Maybe we shouldn't have wasted money on them...", summaryName: "Broken Cameras", chance: 15, effect: { happiness: -10 }, image: "broken.png" },
-        { name: "Oh no! Some raccoons got in our food reserve and spoiled the food.", summaryName: "Raccoons", chance: 15, effect: { happiness: -10 }, image: "racoon.png" }
+        { name: "Oh no! Some of the people in the community have stolen extra rations. I guess you didn't install enough security...", summaryName: "Corruption", chance: 15, effect: { happiness: -10 }, image: "fixedcorruption.png" },
+        { name: "Oh no! Some of the surveillance cameras are malfunctioning. Maybe we shouldn't have wasted money on them...", summaryName: "Broken Cameras", chance: 15, effect: { happiness: -10 }, image: "fixedbroken.png" },
+        { name: "Oh no! Some raccoons got in our food reserve and spoiled the food.", summaryName: "Raccoons", chance: 15, effect: { happiness: -10 }, image: "fixedracoon.png" }
     ];
     
     
