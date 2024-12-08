@@ -127,14 +127,17 @@ const scenarios = [
     
     
     function simulateRobotEvents() {
-    const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
+        const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
     
-    if (triggeredEvents.length > 0) {
-    const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
-    robotHappiness += event.effect.happiness;
-    robotSummary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
+        if (triggeredEvents.length > 0) {
+            const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
+            robotHappiness += event.effect.happiness;
+    
+            // Add the simplified random event name to the robot's summary
+            robotSummary.push({ text: `Random Event: ${event.summaryName} (-10% happiness)`, color: "orange" });
+        }
     }
-    }
+    
     
     function simulateRobotDecision(decision) {
     robotHappiness += decision.happiness || 0;
@@ -233,9 +236,6 @@ const scenarios = [
     
         simulateRobot(); // Simulate the robot's decisions and events
     
-        // Filter random events for the summary
-        const userRandomEvents = summary.filter(item => item.color === "orange");
-    
         summaryDiv.id = "summary";
         summaryDiv.innerHTML = `
             <h2>Game Over</h2>
@@ -243,15 +243,13 @@ const scenarios = [
                 <div style="width: 45%;">
                     <h3>Your Decisions:</h3>
                     <div>${summary
-                        .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
+                        .map(item => `<p style="color: ${item.color};">${item.text.replace("Random Event: ", "")}</p>`)
                         .join("")}</div>
-                    <h4>Random Events:</h4>
-                    <ul>${userRandomEvents.map(item => `<li>${item.text.replace("Random Event: ", "")}</li>`).join("")}</ul>
                 </div>
                 <div style="width: 45%;">
                     <h3>Robot's Decisions:</h3>
                     <div>${robotSummary
-                        .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
+                        .map(item => `<p style="color: ${item.color};">${item.text.replace("Random Event: ", "")}</p>`)
                         .join("")}</div>
                 </div>
             </div>
