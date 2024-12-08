@@ -76,7 +76,7 @@ const scenarios = [
     { text: "Host ceremonies", happiness: 5, robbing: 5 }
     ];
     
-    let robotHappiness = 70;
+    let robotHappiness = 30;
     let robotSummary = [];
     let robotDecisionsMade = 0;
     
