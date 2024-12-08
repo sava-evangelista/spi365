@@ -7,7 +7,7 @@ const scenarios = [
     text: "First, you must decide how much security should be installed to look over the food reserves.",
     option1: { text: "Install cameras", happiness: -10, robbing: -5 },
     option2: { text: "Do not install cameras", happiness: 10, robbing: 10, camera: -15 },
-    image: "security.png"
+    image: "fixed1.png"
     },
     {
     text: "Some of your peers are worried simple cameras aren't enough, should they install facial recognition software for the camera system?",
