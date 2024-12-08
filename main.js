@@ -219,6 +219,11 @@ const scenarios = [
         decisionsMade++;
         adjustEventChances(choice);
     
+        // Special case: Skip facial recognition question if cameras are not installed
+        if (currentScenario === 1 && choice.text === "Do not install cameras") {
+            currentScenario++; // Skip to the next question after facial recognition
+        }
+    
         // Special case: Expired food decision
         if (choice.text === "Keep distributing expired food") {
             triggerSicknessEvent(); // Trigger the sickness event
@@ -229,6 +234,7 @@ const scenarios = [
             loadScenario(currentScenario);
         });
     }
+    
     
     function loadSummary() {
         const gameContainer = document.getElementById("game-container");
