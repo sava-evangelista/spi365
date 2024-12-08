@@ -6,7 +6,7 @@ const scenarios = [
     {
     text: "First, you must decide how much security should be installed to look over the food reserves.",
     option1: { text: "Install cameras", happiness: -10, robbing: -5 },
-    option2: { text: "Do not install cameras", happiness: 10, robbing: 10 }
+    option2: { text: "Do not install cameras", happiness: 10, robbing: 10, camera: -15 }
     },
     {
     text: "Some of your peers are worried simple cameras aren't enough, should they install facial recognition software for the camera system?",
@@ -46,10 +46,10 @@ const scenarios = [
     ];
     
     let randomEvents = [
-    { name: "Robbing", chance: 15, effect: { happiness: -10 } },
-    { name: "Corruption", chance: 15, effect: { happiness: -10 } },
-    { name: "Camera breaks", chance: 15, effect: { happiness: -10 } },
-    { name: "Raccoon steals food", chance: 15, effect: { happiness: -10 } }
+    { name: "Oh no! Burglars from another group have stolen some of your food. I guess you didn't install enough security...", chance: 15, effect: { happiness: -10 } },
+    { name: "Oh no! Some of the people in the community have stolen extra rations. I guess you didn't install enough security...", chance: 15, effect: { happiness: -10 } },
+    { name: "Oh no! Some of the surveillance cameras are malfunctioning. Maybe we shouldn't have wasted money on them...", chance: 15, effect: { happiness: -10 } },
+    { name: "Oh no! Some raccoons got in our food reserve and spoiled the food.", chance: 15, effect: { happiness: -10 } }
     ];
     
     let currentScenario = 0;
