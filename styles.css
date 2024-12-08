@@ -44,3 +44,11 @@ body {
     margin-top: 20px;
     font-size: 1em;
 }
+
+#scenario-image {
+    display: block; /* Ensure it's a block element */
+    width: 100%; /* Scale to the container width */
+    max-height: 300px; /* Limit the height */
+    object-fit: contain; /* Ensure the entire image fits without cropping */
+    margin: 0 auto 20px; /* Center the image and add space below */
+}
