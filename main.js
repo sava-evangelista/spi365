@@ -62,7 +62,7 @@ const scenarios = [
     
     
     let currentScenario = 0;
-    let happiness = 70;
+    let happiness = 30;
     let summary = [];
     let decisionsMade = 0; // Counter for decisions made
     
