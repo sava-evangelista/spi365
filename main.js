@@ -217,20 +217,16 @@ const scenarios = [
         const gameContainer = document.getElementById("game-container");
     
         gameContainer.innerHTML = `
-            <h2>What's Next?</h2>
-            <p>
-                Congratulations on completing the game! How were your public happiness stats compared to the robots? In the case that the robot's
-                choices led to a higher public happiness, would humans still trust a robot to be making these difficult decisions? Additionally, 
-                how responsible do you feel for the random events that occurred? Would robots be held more accountable for such unforeseen events than humans?
+    <h2>What's Next?</h2>
+    <p>
+        Congratulations on completing the game! How were your public happiness stats compared to the robots? In the case that the robot's choices led to a higher public happiness, would humans still trust a robot to be making these difficult decisions?<br><br>
+        Additionally, how responsible do you feel for the random events that occurred? Would robots be held more accountable for such unforeseen events than humans?<br><br>
+        This highlights an important technomoral dilemma: which processes should remain under human control, and which can be entrusted to robots? In this scenario, the robot operated under a utilitarian framework, making decisions solely based on maximizing overall utility.<br><br>
+        While utilitarianism prioritizes the greatest good for the greatest number, it often overlooks emotional and moral nuances that humans value deeply, such as fairness, empathy, and individual dignity. Further, it is extremely difficult to take into account unpredicted consequences of actions, which may arise from decisions made without full context or foresight.<br><br>
+        If robots were to take on such roles, how would society ensure that ethical considerations beyond pure utility are respected?
+    </p>
+`;
 
-                TThis highlights an important technomoral dilemma: which processes should remain under human control, and which can be entrusted to robots? 
-                In this scenario, the robot operated under a utilitarian framework, making decisions solely based on maximizing overall utility.
-                While utilitarianism prioritizes the greatest good for the greatest number, it often overlooks emotional and moral nuances that humans value deeply, 
-                such as fairness, empathy, and individual dignity. Further, it is extremely difficult to take into account unpredicted consequences of actions, which 
-                may arise from decisions made without full context or foresight. If robots were to take on such roles, how would society ensure that ethical considerations 
-                beyond pure utility are respected?
-            </p>
-        `;
     }
     
     function handleChoice(choice) {
