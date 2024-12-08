@@ -46,11 +46,12 @@ const scenarios = [
     ];
     
     let randomEvents = [
-    { name: "Oh no! Burglars from another group have stolen some of your food. I guess you didn't install enough security...", chance: 15, effect: { happiness: -10 } },
-    { name: "Oh no! Some of the people in the community have stolen extra rations. I guess you didn't install enough security...", chance: 15, effect: { happiness: -10 } },
-    { name: "Oh no! Some of the surveillance cameras are malfunctioning. Maybe we shouldn't have wasted money on them...", chance: 15, effect: { happiness: -10 } },
-    { name: "Oh no! Some raccoons got in our food reserve and spoiled the food.", chance: 15, effect: { happiness: -10 } }
+        { name: "Oh no! Burglars from another group have stolen some of your food. I guess you didn't install enough security...", summaryName: "Robbing", chance: 15, effect: { happiness: -10 } },
+        { name: "Oh no! Some of the people in the community have stolen extra rations. I guess you didn't install enough security...", summaryName: "Corruption", chance: 15, effect: { happiness: -10 } },
+        { name: "Oh no! Some of the surveillance cameras are malfunctioning. Maybe we shouldn't have wasted money on them...", summaryName: "Broken Cameras", chance: 15, effect: { happiness: -10 } },
+        { name: "Oh no! Some raccoons got in our food reserve and spoiled the food.", summaryName: "Raccoons", chance: 15, effect: { happiness: -10 } }
     ];
+    
     
     let currentScenario = 0;
     let happiness = 70;
@@ -92,31 +93,38 @@ const scenarios = [
     }
     
     function randomEvent(callback) {
-    if (decisionsMade <= 3) {
-    callback(); // Skip random events
-    return;
+        if (decisionsMade <= 3) {
+            callback(); // Skip random events
+            return;
+        }
+    
+        const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
+    
+        if (triggeredEvents.length > 0) {
+            const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
+            happiness += event.effect.happiness;
+    
+            // Add the summary name for later display
+            summary.push({ text: `Random Event: ${event.summaryName} (-10% happiness)`, color: "orange" });
+    
+            // Display the detailed description
+            const scenarioContainer = document.getElementById("scenario-container");
+            const optionsContainer = document.getElementById("options-container");
+    
+            scenarioContainer.innerHTML = `
+                <h2 style="font-size: 24px; font-weight: bold;">Random Event</h2>
+                <p>${event.name}</p>
+            `;
+            optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
+    
+            document.getElementById("continue-button").onclick = () => {
+                callback();
+            };
+        } else {
+            callback(); // No random event, proceed normally
+        }
     }
     
-    const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
-    
-    if (triggeredEvents.length > 0) {
-    const event = triggeredEvents[Math.floor(Math.random() * triggeredEvents.length)];
-    happiness += event.effect.happiness;
-    summary.push({ text: `Random Event: ${event.name} (-10% happiness)`, color: "orange" });
-    
-    const scenarioContainer = document.getElementById("scenario-container");
-    const optionsContainer = document.getElementById("options-container");
-    
-    scenarioContainer.innerHTML = `<p>Random Event: ${event.name} occurred!</p>`;
-    optionsContainer.innerHTML = `<button id="continue-button">Continue</button>`;
-    
-    document.getElementById("continue-button").onclick = () => {
-    callback();
-    };
-    } else {
-    callback(); // No random event, proceed normally
-    }
-    }
     
     function simulateRobotEvents() {
     const triggeredEvents = randomEvents.filter(event => Math.random() * 100 < event.chance);
@@ -225,6 +233,9 @@ const scenarios = [
     
         simulateRobot(); // Simulate the robot's decisions and events
     
+        // Filter random events for the summary
+        const userRandomEvents = summary.filter(item => item.color === "orange");
+    
         summaryDiv.id = "summary";
         summaryDiv.innerHTML = `
             <h2>Game Over</h2>
@@ -234,6 +245,8 @@ const scenarios = [
                     <div>${summary
                         .map(item => `<p style="color: ${item.color};">${item.text}</p>`)
                         .join("")}</div>
+                    <h4>Random Events:</h4>
+                    <ul>${userRandomEvents.map(item => `<li>${item.text.replace("Random Event: ", "")}</li>`).join("")}</ul>
                 </div>
                 <div style="width: 45%;">
                     <h3>Robot's Decisions:</h3>
@@ -257,6 +270,7 @@ const scenarios = [
     
         document.getElementById("whats-next-button").onclick = loadWhatsNext;
     }
+    
     
     
     
