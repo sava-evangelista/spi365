@@ -218,7 +218,7 @@ const scenarios = [
         gameContainer.innerHTML = `
     <h2>What's Next?</h2>
     <p>
-        Congratulations on completing the game! How were your public happiness stats compared to the robots? In the case that the robot's choices led to a higher public happiness, would humans still trust a robot to be making these difficult decisions?<br><br>
+        Congratulations on completing the game! How were your society's happiness stats compared to the robots? In the case that the robot's choices led to a higher happiness, would humans still trust a robot to be making these difficult decisions?<br><br>
         Additionally, how responsible do you feel for the random events that occurred? Would robots be held more accountable for such unforeseen events than humans?<br><br>
         This highlights an important technomoral dilemma: which processes should remain under human control, and which can be entrusted to robots? In this scenario, the robot operated under a utilitarian framework, making decisions solely based on maximizing overall utility.<br><br>
         While utilitarianism prioritizes the greatest good for the greatest number, it often overlooks emotional and moral nuances that humans value deeply, such as fairness, empathy, and individual dignity. Further, it is extremely difficult to take into account unpredicted consequences of actions, which may arise from decisions made without full context or foresight.<br><br>
@@ -260,7 +260,10 @@ const scenarios = [
         const summaryDiv = document.createElement("div");
     
         simulateRobot(); // Simulate the robot's decisions and events
-    
+        
+        const chappiness = Math.min(happiness, 100);
+        const crobotHappiness = Math.min(robotHappiness, 100);
+
         summaryDiv.id = "summary";
         summaryDiv.innerHTML = `
             <h2>Game Over</h2>
@@ -280,8 +283,8 @@ const scenarios = [
             </div>
             <h3>Results:</h3>
             <div style="text-align: center;">
-                <p><strong>Your Final Public Happiness:</strong> ${happiness}%</p>
-                <p><strong>Robot's Final Public Happiness:</strong> ${robotHappiness}%</p>
+                <p><strong>Your Final Society Happiness:</strong> ${chappiness}%</p>
+                <p><strong>Robot's Final Society Happiness:</strong> ${crobotHappiness}%</p>
             </div>
             <div style="text-align: center; margin-top: 20px;">
                 <button id="whats-next-button" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">What's Next?</button>
