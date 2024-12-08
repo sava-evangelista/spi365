@@ -261,8 +261,8 @@ const scenarios = [
     
         simulateRobot(); // Simulate the robot's decisions and events
         
-        const chappiness = Math.min(happiness, 100);
-        const crobotHappiness = Math.min(robotHappiness, 100);
+        const chappiness = Math.max(0, Math.min(happiness, 100));
+        const crobotHappiness = Math.max(0, Math.min(robotHappiness, 100));
 
         summaryDiv.id = "summary";
         summaryDiv.innerHTML = `
