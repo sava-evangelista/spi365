@@ -41,7 +41,7 @@ const scenarios = [
     },
     {
     text: "You've found the missing food rations, but they look past their due date. What do you do with the expired food?",
-    option1: { text: "Distributed the expired food", happiness: 20, sickness: 50 },
+    option1: { text: "Distribute the expired food", happiness: 20, sickness: 50 },
     option2: { text: "Throw out the expired food", happiness: -15, racoon: 20 },
     image: "fixedexpire.png"
     },
@@ -68,7 +68,6 @@ const scenarios = [
     
     const robotDecisions = [
     { text: "Do not install cameras", happiness: 10, robbing: 10 },
-    { text: "Do not install facial recognition", happiness: 0 },
     { text: "Do not employ extra police", happiness: 10, robbing: 5 },
     { text: "Choose bread", happiness: 5, racoon: 10 },
     { text: "Feed 3 strong men", happiness: 10 },
