@@ -31,7 +31,7 @@ const scenarios = [
     text: "There isn't enough food to go around at breakfast, you must pick one of these groups to feed, while the other stays hungry.",
     option1: { text: "Feed 5 elderly", happiness: 5 },
     option2: { text: "Feed 3 strong men", happiness: 10 },
-    image: "old.png"
+    image: "fixedold.png"
     },
     {
     text: "We've misplaced some rations of food during the day, and now it is dinner time. You must pick another one of these groups to feed.",
