@@ -55,7 +55,7 @@ const scenarios = [
     
     let randomEvents = [
         { name: "Oh no! Burglars from another group have stolen some of your food. I guess you didn't install enough security...", summaryName: "Robbing", chance: 15, effect: { happiness: -10 }, image: "robbers.png" },
-        { name: "Oh no! Some of the people in the community have stolen extra rations. I guess you didn't install enough security...", summaryName: "Corruption", chance: 15, effect: { happiness: -10 }, image: "fixedcorruption.png" },
+        { name: "Oh no! Some of the people in the community have broken the rules and stole extra rations.", summaryName: "Corruption", chance: 15, effect: { happiness: -10 }, image: "fixedcorruption.png" },
         { name: "Oh no! Some of the surveillance cameras are malfunctioning. Maybe we shouldn't have wasted money on them...", summaryName: "Broken Cameras", chance: 15, effect: { happiness: -10 }, image: "fixedbroken.png" },
         { name: "Oh no! Some raccoons got in our food reserve and spoiled the food.", summaryName: "Raccoons", chance: 15, effect: { happiness: -10 }, image: "fixedracoon.png" }
     ];
