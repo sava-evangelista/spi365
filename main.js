@@ -4,13 +4,13 @@ const scenarios = [
     startSlide: true // Special flag for the first slide
     },
     {
-    text: "First, you must decide how much security should be installed to look over the food reserves.",
+    text: "First, you must decide how much security should be installed to look over the food reserves. While this may protect the food supply, people may be disappointed that they aren't trusted.",
     option1: { text: "Install cameras", happiness: -10, robbing: -5 },
     option2: { text: "Do not install cameras", happiness: 10, robbing: 10, camera: -15 },
     image: "fixed1.png"
     },
     {
-    text: "Some of your peers are worried simple cameras aren't enough, should they install facial recognition software for the camera system?",
+    text: "Some of your peers are worried simple cameras aren't enough, should they install facial recognition software for the camera system? While this may help deter theft, it could also make people uncomfortable.",
     option1: { text: "Install facial recognition", happiness: -20, camera: 5, robbing: -10 },
     option2: { text: "Do not install facial recognition", happiness: 0 },
     image: "fixed2.png"
